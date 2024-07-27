@@ -1,0 +1,29 @@
+---
+name: build
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'api/**.go'
+      - 'api/go.mod'
+      - 'api/go.sum'
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+jobs:
+  lint:
+    if: |
+      github.ref_name != 'main' &&
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'api/go.mod'
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          working-directory: 'api'
+          version: latest
