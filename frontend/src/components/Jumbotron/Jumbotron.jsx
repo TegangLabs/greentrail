@@ -18,7 +18,7 @@ const Jumbotron = () => {
             </p>
           </div>{" "}
           <div className="right-content col-span-12 order-1 md:order-2 md:col-span-6 items-center mx-auto mb-14 md:mb-0">
-            <div className="image w-64 md:w-82">
+            <div className="image w-64 md:w-96">
               <img src={jumbotron_image} alt="image jumbotron" />
             </div>
           </div>
