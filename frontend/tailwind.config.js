@@ -10,6 +10,7 @@ export default {
         primary: "#2d7864",
         secondary: "#ff981a",
         hitam: "#232323",
+        coklat: "#AF4D04",
         "hijau-muda": "#d9edbf",
         "hijau-normal": "#90d26d",
       },

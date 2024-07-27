@@ -1,5 +1,5 @@
 import React from "react";
-import jumbotron_image from "../../assets/jumbotron.svg";
+import jumbotron_image from "../../assets/img/jumbotron.svg";
 
 const Jumbotron = () => {
   return (
