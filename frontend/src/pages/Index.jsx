@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../layout/Layout";
+import Jumbotron from "../components/Jumbotron/Jumbotron";
 
 const Index = () => {
   const tabs = [
@@ -11,7 +12,9 @@ const Index = () => {
   return (
     <>
       <Layout>
-        <h1>Halo</h1>
+        <section className="homepage-contents">
+          <Jumbotron />
+        </section>
       </Layout>
     </>
   );
