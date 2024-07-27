@@ -42,6 +42,10 @@ const TrackWaste = () => {
                 Submit
               </button>
             </form>
+            <p className="text-xs md:text-sm w-10/12 md:w-8/12 mx-auto text-coklat italic">
+              *Track the status of your waste using your phone number or waste
+              id.
+            </p>
           </div>
         </div>
       </section>
