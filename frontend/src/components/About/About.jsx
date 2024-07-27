@@ -6,7 +6,10 @@ const About = () => {
   return (
     <>
       {" "}
-      <section className="about w-11/12 mx-auto md:my-28 my-20">
+      <section
+        id="about-section"
+        className="about w-11/12 mx-auto md:my-28 my-20"
+      >
         <div className="about-contents md:w-11/12 mx-auto grid grid-cols-12 items-center">
           <div className="left-content col-span-12 order-2 md:order-2 md:col-span-6  text-primary">
             <h1 className="text-center md:text-left text-2xl md:text-3xl font-bold mb-3">
