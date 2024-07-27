@@ -4,6 +4,7 @@ import Jumbotron from "../components/Jumbotron/Jumbotron";
 import TrackWaste from "../components/TrackWaste/TrackWaste";
 import Info from "../components/InfoGraphic/Info";
 import About from "../components/About/About";
+import JoinCampaign from "../components/JoinCampaign/JoinCampaign";
 
 const Index = () => {
   const tabs = [
@@ -20,6 +21,7 @@ const Index = () => {
           <TrackWaste />
           <Info />
           <About />
+          <JoinCampaign />
         </section>
       </Layout>
     </>
