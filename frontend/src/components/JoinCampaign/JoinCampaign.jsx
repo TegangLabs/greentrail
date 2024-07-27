@@ -17,7 +17,7 @@ const JoinCampaign = () => {
             real difference.
           </p>
           <Link to={"/campaign"} className="flex justify-center md:mt-3">
-            <div className=" md:px-6 md:py-2 text-white border border-3 border-hijau-normal rounded-md">
+            <div className=" md:px-6 md:py-2 text-white hover:bg-[#428573] hover:border-secondary border border-3 border-hijau-normal rounded-md">
               Let's Start
             </div>
           </Link>
