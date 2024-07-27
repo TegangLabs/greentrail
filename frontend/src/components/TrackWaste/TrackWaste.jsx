@@ -23,11 +23,11 @@ const TrackWaste = () => {
           <h1 className="text-center text-xl md:text-3xl font-bold mb-3 text-secondary">
             Track your waste
           </h1>
-          <p className="text-coklat w-10/12 md:w-5/12 mx-auto text-sm md:text-base text-center italic">
+          <p className="text-coklat w-10/12 md:w-5/12 mx-auto text-xs md:text-base text-center italic">
             You can track the status of the waste you have sent to us. Join us
             in this mission of goodness and make a positive contribution!
           </p>
-          <div className="search-waste text-center md:my-4 w-10/12 md:w-5/12 mx-auto">
+          <div className="search-waste text-center my-3 md:my-4 w-11/12 md:w-5/12 mx-auto">
             <form onSubmit={handleSubmit}>
               <input
                 placeholder="0892...."
@@ -38,7 +38,7 @@ const TrackWaste = () => {
                 value={phone}
                 onChange={handleInputChange}
               />
-              <button className="bg-primary text-white md:px-4 md:py-2 md:text-sm rounded-md md:ml-4">
+              <button className="bg-primary text-white px-2 md:px-4 py-1 md:py-2 text-sm rounded-md ml-2 md:ml-4">
                 Submit
               </button>
             </form>

@@ -10,14 +10,14 @@ const JoinCampaign = () => {
           <h1 className="text-center text-xl md:text-3xl font-bold mb-3 text-secondary">
             Join Our Campaign
           </h1>
-          <p className="text-white font-light w-10/12 md:w-7/12 mx-auto text-sm md:text-base text-center italic">
+          <p className="text-white font-light w-11/12 md:w-7/12 mx-auto text-sm md:text-base text-center italic">
             Become a part of our community today and take the first step towards
             a greener tomorrow. Your commitment can inspire others and drive
             meaningful change. Together, we can turn waste into worth and make a
             real difference.
           </p>
-          <Link to={"/campaign"} className="flex justify-center md:mt-3">
-            <div className=" md:px-6 md:py-2 text-white hover:bg-[#428573] hover:border-secondary border border-3 border-hijau-normal rounded-md">
+          <Link to={"/campaign"} className="flex justify-center mt-3">
+            <div className="px-3 py-2 md:px-6 md:py-2 text-white hover:bg-[#428573] hover:border-secondary border border-3 border-hijau-normal rounded-md">
               Let's Start
             </div>
           </Link>
