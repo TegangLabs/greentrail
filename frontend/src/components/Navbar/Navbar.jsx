@@ -20,9 +20,17 @@ const Navbar = ({}) => {
     },
     {
       name: "About",
-      link: "#about",
+      link: "#about-section",
     },
   ];
+
+  const handleScrollToSection = (e, link) => {
+    e.preventDefault();
+    const section = document.querySelector(link);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav className="hidden md:block navbar-section md:mt-4 md:w-11/12 mx-auto bg-primary md:rounded-2xl">
@@ -39,6 +47,11 @@ const Navbar = ({}) => {
                       ? "font-bold text-secondary"
                       : " font-normal text-white hover:text-orange-200"
                   } `}
+                  onClick={(e) =>
+                    item.link.startsWith("#")
+                      ? handleScrollToSection(e, item.link)
+                      : null
+                  }
                 >
                   {item.name}
                 </Link>
