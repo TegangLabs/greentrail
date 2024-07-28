@@ -1,0 +1,37 @@
+---
+properties:
+  id:
+    type: keyword
+    normalizer: lowercase
+  email:
+    type: keyword
+  phone:
+    type: keyword
+  first_name:
+    type: keyword
+  last_nme:
+    type: keyword
+  address:
+    type: object
+    properties:
+      street:
+        type: keyword
+      rt:
+        type: integer
+      rw:
+        type: integer
+      kelurahan:
+        type: keyword
+      kecamatan:
+        type: keyword
+      province:
+        type: keyword
+      city:
+        type: keyword
+      location:
+        type: object
+        properties:
+          lat:
+            type: double
+          long:
+            type: double

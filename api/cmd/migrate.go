@@ -29,10 +29,6 @@ func migrate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if err := es.DeleteIndex(cmd.Context(), esClient, repository.VolunteerIndex); err != nil {
-		return err
-	}
-
 	if err := es.CreateIndex(cmd.Context(), esClient, repository.VolunteerIndex, conf.C.Mappings["settings"]); err != nil {
 		return err
 	}
@@ -41,7 +37,19 @@ func migrate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if err := es.CreateIndex(cmd.Context(), esClient, repository.WasteIndex, conf.C.Mappings["settings"]); err != nil {
+		return err
+	}
+
 	if err := es.PutMapping(cmd.Context(), esClient, repository.WasteIndex, conf.C.Mappings["waste"]); err != nil {
+		return err
+	}
+
+	if err := es.CreateIndex(cmd.Context(), esClient, repository.CitizenIndex, conf.C.Mappings["settings"]); err != nil {
+		return err
+	}
+
+	if err := es.PutMapping(cmd.Context(), esClient, repository.CitizenIndex, conf.C.Mappings["citizen"]); err != nil {
 		return err
 	}
 
