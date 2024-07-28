@@ -10,6 +10,13 @@ var C AppConfig
 
 type AppConfig struct {
 	Server ServerConf `yaml:"server"`
+	SendGrid SendGridConf `yaml:"sendGrid"`
+}
+
+type SendGridConf struct {
+	APIKey string `yaml:"apiKey"`
+	EmailAPIKey string `yaml:"emailKey"`
+	EmailAddress string `yaml:"emailAddress"`
 }
 
 type ServerConf struct {
