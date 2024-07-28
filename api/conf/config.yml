@@ -6,3 +6,14 @@ sendGrid:
   apiKey: ""
   emailKey: ""
   emailAddress: ""
+elasticsearch:
+  host: http://localhost:9200
+  username: elastic
+  password: changeme
+token:
+  secret: suppasecret
+mappings:
+  citizen: conf/mappings/citizen.yml
+  settings: conf/mappings/settings.yml
+  volunteer: conf/mappings/volunteer.yml
+  waste: conf/mappings/waste.yml
