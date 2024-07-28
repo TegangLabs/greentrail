@@ -8,8 +8,12 @@ import (
 	"syscall"
 
 	"github.com/TegangLabs/greentrail/conf"
+	"github.com/TegangLabs/greentrail/repository"
+	"github.com/TegangLabs/greentrail/service"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/olivere/elastic/v7"
+	"github.com/olivere/elastic/v7/config"
 	"github.com/spf13/cobra"
 )
 
@@ -27,10 +31,26 @@ func serve(cmd *cobra.Command, args []string) error {
 	e := echo.New()
 	e.Use(middleware.Recover())
 
-	r := e.Group("api")
+	esClient, err := elastic.NewClientFromConfig(&config.Config{
+		URL:      conf.C.Elasticsearch.Host,
+		Username: conf.C.Elasticsearch.Username,
+		Password: conf.C.Elasticsearch.Password,
+	})
+	if err != nil {
+		return err
+	}
+
+	// Repository
+	volunteerRepo := repository.NewVolunteerRepo(esClient)
+
+	r := e.Group("/api")
 	r.GET("/health", func(c echo.Context) error {
 		return c.String(http.StatusOK, "OK")
 	})
+
+	// Service
+	volunteerService := service.NewVolunteerService(volunteerRepo)
+	volunteerService.Register(r)
 
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", conf.C.Server.Host, conf.C.Server.Port), e); err != nil {
 		return err

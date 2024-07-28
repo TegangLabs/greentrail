@@ -9,13 +9,25 @@ import (
 var C AppConfig
 
 type AppConfig struct {
-	Server ServerConf `yaml:"server"`
-	SendGrid SendGridConf `yaml:"sendGrid"`
+	Server        ServerConf   `yaml:"server"`
+	SendGrid      SendGridConf `yaml:"sendGrid"`
+	Elasticsearch ElasticsearchConf
+	Token         TokenConf
+	Mappings      map[string]string
 }
 
+type ElasticsearchConf struct {
+	Host     string `yaml:"host"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+}
+
+type TokenConf struct {
+	Secret string
+}
 type SendGridConf struct {
-	APIKey string `yaml:"apiKey"`
-	EmailAPIKey string `yaml:"emailKey"`
+	APIKey       string `yaml:"apiKey"`
+	EmailAPIKey  string `yaml:"emailKey"`
 	EmailAddress string `yaml:"emailAddress"`
 }
 
