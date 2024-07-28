@@ -1,0 +1,51 @@
+---
+properties:
+  id:
+    type: keyword
+    normalizer: lowercase
+  submitter:
+    type: keyword
+    normalizer: lowercase
+  type:
+    type: keyword
+  image_url:
+    type: keyword
+  metric:
+    type: object
+    properties:
+      weight:
+        type: integer
+  address:
+    type: object
+    properties:
+      street:
+        type: keyword
+      rt:
+        type: integer
+      rw:
+        type: integer
+      kelurahan:
+        type: keyword
+      kecamatan:
+        type: keyword
+      province:
+        type: keyword
+      city:
+        type: keyword
+      location:
+        type: object
+        properties:
+          lat:
+            type: double
+          long:
+            type: double
+  status:
+    type: nested
+    properties:
+      handler:
+        type: keyword
+        normalizer: lowercase
+      stage:
+        type: integer
+      status:
+        type: keyword
