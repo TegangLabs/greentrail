@@ -55,7 +55,7 @@ func serve(cmd *cobra.Command, args []string) error {
 	volunteerService.Register(r)
 	wasteService.Register(r)
 
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", conf.C.Server.Host, conf.C.Server.Port), e); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", conf.C.Server["api"].Host, conf.C.Server["api"].Port), e); err != nil {
 		return err
 	}
 

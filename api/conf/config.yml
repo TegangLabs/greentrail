@@ -1,7 +1,11 @@
 ---
 server:
-  host: localhost
-  port: 9700
+  api:
+    host: localhost
+    port: 9700
+  integration:
+    host: localhost
+    port: 9701
 sendGrid:
   apiKey: ""
   emailKey: ""
