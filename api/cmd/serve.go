@@ -42,6 +42,7 @@ func serve(cmd *cobra.Command, args []string) error {
 
 	// Repository
 	volunteerRepo := repository.NewVolunteerRepo(esClient)
+	wasteRepo := repository.NewWasteRepository(esClient)
 
 	r := e.Group("/api")
 	r.GET("/health", func(c echo.Context) error {
@@ -50,7 +51,9 @@ func serve(cmd *cobra.Command, args []string) error {
 
 	// Service
 	volunteerService := service.NewVolunteerService(volunteerRepo)
+	wasteService := service.NewWasteService(wasteRepo)
 	volunteerService.Register(r)
+	wasteService.Register(r)
 
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", conf.C.Server.Host, conf.C.Server.Port), e); err != nil {
 		return err

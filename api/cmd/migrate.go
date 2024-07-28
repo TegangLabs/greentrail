@@ -41,5 +41,9 @@ func migrate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if err := es.PutMapping(cmd.Context(), esClient, repository.WasteIndex, conf.C.Mappings["waste"]); err != nil {
+		return err
+	}
+
 	return nil
 }
