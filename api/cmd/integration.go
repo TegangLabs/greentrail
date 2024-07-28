@@ -9,7 +9,7 @@ import (
 
 	"github.com/TegangLabs/greentrail/conf"
 	"github.com/TegangLabs/greentrail/email"
-  mw "github.com/TegangLabs/greentrail/middleware"
+	mw "github.com/TegangLabs/greentrail/middleware"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/cobra"
@@ -56,7 +56,7 @@ func integration(cmd *cobra.Command, args []string) error {
 		return c.JSON(http.StatusOK, map[string]string{"status": "Email sent successfully"})
 	})
 
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", conf.C.Server.Host, conf.C.Server.Port), e); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", conf.C.Server["integration"].Host, conf.C.Server["integration"].Port), e); err != nil {
 		return err
 	}
 

@@ -9,8 +9,8 @@ import (
 var C AppConfig
 
 type AppConfig struct {
-	Server        ServerConf   `yaml:"server"`
-	SendGrid      SendGridConf `yaml:"sendGrid"`
+	Server        map[string]ServerConf `yaml:"server"`
+	SendGrid      SendGridConf          `yaml:"sendGrid"`
 	Elasticsearch ElasticsearchConf
 	Token         TokenConf
 	Mappings      map[string]string
