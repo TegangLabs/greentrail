@@ -26,15 +26,15 @@ const WasteCard = ({ waste, wasteIdx }) => {
             <div className="status text-primary text-sm mb-1">Status</div>
             <ol className="flex items-center w-full">
               <li
-                className={`flex w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b ${
-                  waste.status[1].station
+                className={`flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b ${
+                  waste?.status[1] !== undefined
                     ? "after:border-primary"
                     : "after:border-gray-200"
                 }  after:border-4 after:inline-block`}
               >
                 <span
                   className={`flex items-center ${
-                    waste.status[0].station
+                    waste?.status[0] !== undefined
                       ? "text-white bg-primary"
                       : "text-gray-600 bg-gray-200"
                   }  justify-center w-5 h-5 rounded-full md:text-xs  shrink-0`}
@@ -43,15 +43,15 @@ const WasteCard = ({ waste, wasteIdx }) => {
                 </span>
               </li>{" "}
               <li
-                className={`flex w-full items-center  after:content-[''] after:w-full after:h-1 after:border-b ${
-                  waste.status[2].station
+                className={`flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b ${
+                  waste?.status[2] !== undefined
                     ? "after:border-primary"
                     : "after:border-gray-200"
                 }  after:border-4 after:inline-block`}
               >
                 <span
                   className={`flex items-center ${
-                    waste.status[1].station
+                    waste?.status[1] !== undefined
                       ? "text-white bg-primary"
                       : "text-gray-600 bg-gray-200"
                   } justify-center w-5 h-5 rounded-full md:text-xs  shrink-0`}
@@ -59,10 +59,11 @@ const WasteCard = ({ waste, wasteIdx }) => {
                   2
                 </span>
               </li>{" "}
-              <li className="flex w-full items-center  ">
+              <li className="flex w-full items-center">
+                {console.log(waste.status[1])}
                 <span
                   className={`flex items-center ${
-                    waste.status[2].station
+                    waste?.status[2] !== undefined
                       ? "text-white bg-primary"
                       : "text-gray-600 bg-gray-200"
                   } justify-center w-5 h-5 rounded-full md:text-xs  shrink-0`}
