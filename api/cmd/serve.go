@@ -29,7 +29,7 @@ func init() {
 
 func serve(cmd *cobra.Command, args []string) error {
 	e := echo.New()
-	e.Use(middleware.Recover())
+	e.Use(middleware.Recover(), middleware.CORSWithConfig(middleware.DefaultCORSConfig))
 
 	esClient, err := elastic.NewClientFromConfig(&config.Config{
 		URL:      conf.C.Elasticsearch.Host,
@@ -41,6 +41,7 @@ func serve(cmd *cobra.Command, args []string) error {
 	}
 
 	// Repository
+	citizenRepo := repository.NewCitizenRepo(esClient)
 	volunteerRepo := repository.NewVolunteerRepo(esClient)
 	wasteRepo := repository.NewWasteRepository(esClient)
 
@@ -51,7 +52,7 @@ func serve(cmd *cobra.Command, args []string) error {
 
 	// Service
 	volunteerService := service.NewVolunteerService(volunteerRepo)
-	wasteService := service.NewWasteService(wasteRepo)
+	wasteService := service.NewWasteService(citizenRepo, wasteRepo)
 	volunteerService.Register(r)
 	wasteService.Register(r)
 

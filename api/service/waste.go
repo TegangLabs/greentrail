@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -17,8 +18,25 @@ type UpdateWaste struct {
 	Status string `json:"status,omitempty"`
 }
 
+type AddWaste struct {
+	FirstName string             `json:"first_name,omitempty"`
+	LastName  string             `json:"last_name,omitempty"`
+	Email     string             `json:"email,omitempty"`
+	Phone     string             `json:"phone,omitempty"`
+	ImageURL  string             `json:"image_url,omitempty"`
+	Type      []string           `json:"type,omitempty"`
+	Address   repository.Address `json:"address,omitempty"`
+	Metric    repository.Metric  `json:"metric,omitempty"`
+}
+
 type WasteService struct {
-	repo wasteRepo
+	citizenRepo citizenRepo
+	wasteRepo   wasteRepo
+}
+
+type citizenRepo interface {
+	Search(ctx context.Context, query elastic.Query) ([]*repository.Citizen, error)
+	Save(ctx context.Context, citizen repository.Citizen) error
 }
 
 type wasteRepo interface {
@@ -27,8 +45,8 @@ type wasteRepo interface {
 	Search(ctx context.Context, query elastic.Query) ([]*repository.Waste, error)
 }
 
-func NewWasteService(repo wasteRepo) *WasteService {
-	return &WasteService{repo: repo}
+func NewWasteService(citizenRepo citizenRepo, wasteRepo wasteRepo) *WasteService {
+	return &WasteService{citizenRepo: citizenRepo, wasteRepo: wasteRepo}
 }
 
 func (r *WasteService) Register(group *echo.Group) {
@@ -41,20 +59,63 @@ func (r *WasteService) Register(group *echo.Group) {
 
 func (r *WasteService) AddWaste(c echo.Context) error {
 	user := c.Get("users").(httputil.CustomClaims)
+	userAcc := account.ParseVolunteerAccount(user.ID)
 
-	var waste repository.Waste
-	if err := c.Bind(&waste); err != nil {
+	var req AddWaste
+	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	waste.ID = uuid.New().String()
-	waste.Submitter = user.ID
+	var citizen repository.Citizen
 
-	if err := r.repo.Save(context.Background(), waste); err != nil {
+	cQuery := elastic.NewTermQuery("email", req.Email)
+	existingCitizens, err := r.citizenRepo.Search(context.Background(), cQuery)
+	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	return c.JSON(http.StatusOK, waste)
+	if len(existingCitizens) == 0 {
+		// Create citizen
+		citizen = repository.Citizen{
+			ID:        uuid.NewString(),
+			FirstName: req.FirstName,
+			LastName:  req.LastName,
+			Email:     req.Email,
+			Phone:     req.Phone,
+			Address:   req.Address,
+		}
+
+		if err := r.citizenRepo.Save(context.Background(), citizen); err != nil {
+			fmt.Println(err)
+			return c.JSON(http.StatusInternalServerError, err)
+		}
+	} else {
+		citizen = *existingCitizens[0]
+	}
+
+	now := time.Now()
+	waste := repository.Waste{
+		ID:        uuid.NewString(),
+		Submitter: citizen.ID,
+		ImageURL:  req.ImageURL,
+		Address:   req.Address,
+		Type:      req.Type,
+		Metric:    req.Metric,
+		Status: []repository.Status{
+			{
+				Handler:   userAcc.ID,
+				Stage:     int32(userAcc.Stage),
+				Status:    "Success",
+				HandledOn: &now,
+			},
+		},
+	}
+
+	if err := r.wasteRepo.Save(context.Background(), waste); err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusOK, req)
 }
 
 func (r *WasteService) GetWaste(c echo.Context) error {
@@ -66,7 +127,7 @@ func (r *WasteService) GetWaste(c echo.Context) error {
 		elastic.NewNestedQuery("status", elastic.NewTermQuery("handler", volunteerAcc.ID)),
 	)
 
-	wastes, err := r.repo.Search(context.Background(), query)
+	wastes, err := r.wasteRepo.Search(context.Background(), query)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
@@ -90,7 +151,7 @@ func (r *WasteService) UpdateWaste(c echo.Context) error {
 		})
 	}
 
-	waste, err := r.repo.Get(context.Background(), id)
+	waste, err := r.wasteRepo.Get(context.Background(), id)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "waste not found"})
 	}
@@ -103,7 +164,7 @@ func (r *WasteService) UpdateWaste(c echo.Context) error {
 		HandledOn: &now,
 	})
 
-	if err := r.repo.Save(context.Background(), *waste); err != nil {
+	if err := r.wasteRepo.Save(context.Background(), *waste); err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
