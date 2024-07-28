@@ -4,97 +4,14 @@ import CustomInput from "../components/Form/CustomInput";
 import Swal from "sweetalert2";
 import Layout from "../layout/Layout";
 
-import waste_1 from "../assets/img/waste_samples/waste_1.png";
-import waste_2 from "../assets/img/waste_samples/waste_2.png";
-import waste_3 from "../assets/img/waste_samples/waste_3.png";
-import waste_4 from "../assets/img/waste_samples/waste_4.png";
 import CustomSelect from "../components/Form/CustomSelect";
 import WasteCard from "../components/Card/WasteCard";
+import { waste_volunteer_samples } from "../datas";
 
 const ProfileVolunteer = () => {
   const [phone, setPhone] = useState("");
 
   const [fileImg, setFileImg] = useState("");
-
-  const waste_samples = [
-    {
-      category: "Household Cooking Oil",
-      id: "#lmbs0724001",
-      image: waste_1,
-      status: [
-        {
-          station: true,
-          id_volunteer: "123123",
-        },
-        {
-          station: true,
-          id_volunteer: "56657",
-        },
-        {
-          station: false,
-          id_volunteer: null,
-        },
-      ],
-    },
-    {
-      category: "Household Cooking Oil",
-      id: "#lmbs0724002",
-      image: waste_2,
-
-      status: [
-        {
-          station: true,
-          id_volunteer: "123123",
-        },
-        {
-          station: false,
-          id_volunteer: null,
-        },
-        {
-          station: false,
-          id_volunteer: null,
-        },
-      ],
-    },
-    {
-      category: "Household Cooking Oil",
-      id: "#lmbs0724003",
-      image: waste_3,
-      status: [
-        {
-          station: true,
-          id_volunteer: "123123",
-        },
-        {
-          station: true,
-          id_volunteer: "56657",
-        },
-        {
-          station: true,
-          id_volunteer: "35667",
-        },
-      ],
-    },
-    {
-      category: "Household Cooking Oil",
-      id: "#lmbs0724004",
-      image: waste_4,
-      status: [
-        {
-          station: true,
-          id_volunteer: "123123",
-        },
-        {
-          station: false,
-          id_volunteer: null,
-        },
-        {
-          station: false,
-          id_volunteer: null,
-        },
-      ],
-    },
-  ];
 
   const handlePhoneSearch = (event) => {
     event.preventDefault();
@@ -312,7 +229,7 @@ const ProfileVolunteer = () => {
               </div>
             </div>
             <div className="card-list grid grid-cols-12 md:gap-x-4 gap-y-3">
-              {waste_samples.map((waste, wasteIdx) => {
+              {waste_volunteer_samples.map((waste, wasteIdx) => {
                 return (
                   <>
                     <WasteCard waste={waste} wasteIdx={wasteIdx} />
