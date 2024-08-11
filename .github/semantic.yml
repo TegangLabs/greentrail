@@ -1,2 +1,7 @@
 ---
-{enabled: true, titleOnly: false}
+enabled: true
+titleOnly: false
+scopes:
+  - api
+  - mobile
+  - web
